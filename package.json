@@ -1,7 +1,7 @@
 {
   "name": "birch",
   "version": "1.0.0",
-  "description": "",
+  "description": "Chrome Extension to collect your thoughts with a simple, beautiful notepad in each new tab.",
   "main": "background.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

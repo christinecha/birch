@@ -1033,7 +1033,7 @@ body {
   background-color: #f0f0f0;
   font-family: monospace;
   letter-spacing: 0.03em;
-  color: #4a4a4a;
+  color: #4f4f4f;
 }
 body.is-hidden {
   overflow: hidden;
@@ -1050,7 +1050,7 @@ code {
 code,
 pre {
   background-color: #dddddd !important;
-  color: #4a4a4a !important;
+  color: #4f4f4f !important;
 }
 input {
   background-color: transparent;
@@ -1058,13 +1058,19 @@ input {
   border-bottom: 1px solid #c7c7c6 !important;
   font-family: monospace;
   letter-spacing: 0.03em;
-  color: #4a4a4a;
+  color: #4f4f4f;
 }
 input:focus {
   outline: none;
 }
 a {
-  color: #7aadc1 !important;
+  color: #699cb0 !important;
+}
+::selection {
+  background-color: #bfd7de;
+}
+::-moz-selection {
+  background-color: #bfd7de;
 }
 .editor-wrapper {
   position: relative;
@@ -1091,18 +1097,18 @@ a {
   border: none !important;
   font-family: monospace;
   letter-spacing: 0.03em;
-  color: #4a4a4a;
+  color: #4f4f4f;
 }
 .ql-editor {
   min-height: calc(100vh - 150px);
   font-family: monospace;
   letter-spacing: 0.03em;
-  color: #4a4a4a;
+  color: #4f4f4f;
   line-height: 1.6;
 }
 .ql-editor a {
   text-decoration: none !important;
-  border-bottom: 1px solid #7aadc1;
+  border-bottom: 1px solid #bfd7de;
 }
 .ql-editor.ql-blank::before {
   opacity: 0.6;
@@ -1140,10 +1146,10 @@ a {
   transition: fill 200ms ease-in-out;
 }
 .ql-toolbar button:hover .ql-stroke {
-  stroke: #4a4a4a !important;
+  stroke: #4f4f4f !important;
 }
 .ql-toolbar button:hover .ql-fill {
-  fill: #4a4a4a !important;
+  fill: #4f4f4f !important;
 }
 .ql-editor li:not(.ql-direction-rtl)::before {
   margin-right: 0.8em;
@@ -1152,7 +1158,7 @@ a {
   content: "";
   width: 10px;
   height: 10px;
-  border: 1px solid #4a4a4a;
+  border: 1px solid #4f4f4f;
   border-radius: 100%;
   margin-left: -1em;
   margin-bottom: -1px;
@@ -1169,7 +1175,7 @@ a {
   font-size: 16px;
   width: 6px;
   height: 6px;
-  background: #4a4a4a;
+  background: #4f4f4f;
   border-radius: 100%;
 }
 .ql-editor li.ql-indent-1:not(.ql-direction-rtl) {
@@ -1251,9 +1257,14 @@ a {
 .birch {
   position: fixed;
   top: 20px;
-  left: 20px;
+  left: 25px;
   cursor: pointer;
   z-index: 3;
+  opacity: 0.5;
+  transition: opacity 200ms ease-in-out;
+}
+.birch:hover {
+  opacity: 1;
 }
 .birch svg {
   width: 30px;
@@ -1261,10 +1272,13 @@ a {
   margin: 0 -10px;
 }
 .birch svg path {
-  fill: #c7c7c6;
+  fill: #4f4f4f;
+}
+.birch svg path.bottom {
+  opacity: 0.8;
 }
 .birch svg path.top {
-  opacity: 0.7;
+  opacity: 0.4;
 }
 h1 {
   position: fixed;
