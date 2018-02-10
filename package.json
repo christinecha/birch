@@ -5,6 +5,7 @@
   "main": "background.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rm -rf ./public.zip && zip -r ./public.zip ./public",
     "watch": "webpack --watch --progress & less-watch-compiler"
   },
   "author": "Christine Cha <hello@christinecha.com>",

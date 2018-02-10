@@ -3,6 +3,6 @@
     "outputFolder": "public",
     "mainFile": "index.less",
     "sourceMap": true,
-    "runOnce": false,
+    "runOnce": true,
     "allowedExtensions": [".less", ".css"]
 }

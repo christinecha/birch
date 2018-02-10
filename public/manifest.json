@@ -4,7 +4,7 @@
   "name": "Birch - a minimalistic note pad in your tabs",
   "short_name": "Birch",
   "description": "Collect your thoughts with a simple, beautiful notepad in each new tab.",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'",
 
   "background": {

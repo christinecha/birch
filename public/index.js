@@ -16272,8 +16272,8 @@ return zhTw;
 
 const Quill = __webpack_require__(121)
 const moment = __webpack_require__(0)
-const {QUILL_CONFIG} = __webpack_require__(131)
-__webpack_require__(129)
+const {QUILL_CONFIG} = __webpack_require__(129)
+__webpack_require__(130)
 
 const $time = document.getElementsByClassName('time')[0]
 const $date = document.getElementsByClassName('date')[0]
@@ -30132,22 +30132,6 @@ webpackContext.id = 128;
 /* 129 */
 /***/ (function(module, exports) {
 
-var _gaq = _gaq || [];
-_gaq.push(['_setAccount', 'UA-113582749-1']);
-_gaq.push(['_trackPageview']);
-
-(function() {
-  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-  ga.src = 'https://ssl.google-analytics.com/ga.js';
-  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-})();
-
-
-/***/ }),
-/* 130 */,
-/* 131 */
-/***/ (function(module, exports) {
-
 const QUILL_CONFIG = {
   theme: 'snow',
   bounds: '.editor',
@@ -30175,6 +30159,21 @@ const QUILL_CONFIG = {
 module.exports = {
   QUILL_CONFIG
 }
+
+
+/***/ }),
+/* 130 */
+/***/ (function(module, exports) {
+
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-113582749-1']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = 'https://ssl.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
 
 
 /***/ })
