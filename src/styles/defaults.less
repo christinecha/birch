@@ -1,0 +1,45 @@
+@import (multiple) "./variables.less";
+@import (multiple) "./mixins.less";
+
+body {
+  margin: 0;
+  padding: 0;
+
+  background-color: @off-white;
+  .default-font();
+
+  &.is-hidden {
+    overflow: hidden;
+  }
+}
+
+strong, b {
+  font-weight: 600;
+}
+
+code {
+  font-size: 100% !important;
+  padding: 1px 3px !important;
+  margin: 0 -3px !important;
+}
+
+code, pre {
+  background-color: @light-gray !important;
+  color: @dark-gray !important;
+}
+
+input {
+  background-color: transparent;
+  border: none !important;
+  border-bottom: 1px solid @medium-gray !important;
+
+  .default-font();
+
+  &:focus {
+    outline: none;
+  }
+}
+
+a {
+  color: @light-blue !important;
+}

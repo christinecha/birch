@@ -1,0 +1,144 @@
+@import (multiple) "./variables.less";
+@import (multiple) "./mixins.less";
+
+.editor-wrapper {
+  position: relative;
+  width: 80%;
+  max-width: 1200px;
+  min-height: 100vh;
+  margin: 0 auto;
+}
+
+.ql-toolbar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 1;
+  border: none !important;
+  text-align: right;
+  background-color: @off-white;
+  opacity: 0.9;
+}
+
+.ql-container {
+  padding-top: 100px;
+  padding-bottom: 100px;
+  box-sizing: border-box;
+  min-height: 100vh;
+  border: none !important;
+  .default-font();
+}
+
+.ql-editor {
+  min-height: calc(~"100vh - 150px");
+  .default-font();
+  line-height: 1.6;
+
+  a {
+    text-decoration: none !important;
+    border-bottom: 1px solid @light-blue;
+  }
+}
+
+.ql-editor.ql-blank::before {
+  opacity: 0.6;
+  font-style: normal;
+}
+
+.ql-tooltip {
+  border: none !important;
+  box-shadow: none !important;
+  padding: 10px 15px !important;
+}
+
+.ql-tooltip::before {
+  content: "" !important;
+  margin-right: 0 !important;
+}
+
+.ql-tooltip a.ql-preview {
+  max-width: 280px !important;
+  margin-right: 10px;
+}
+
+.ql-tooltip a.ql-action::after,
+.ql-tooltip a.ql-remove::before {
+  text-transform: lowercase;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.ql-tooltip input[type=text] {
+  width: 280px !important;
+}
+
+.ql-stroke {
+  stroke: @medium-gray !important;
+  transition: stroke 200ms ease-in-out;
+}
+
+.ql-fill {
+  fill: @medium-gray !important;
+  transition: fill 200ms ease-in-out;
+}
+
+.ql-toolbar button:hover {
+  .ql-stroke {
+    stroke: @dark-gray !important;
+  }
+
+  .ql-fill {
+    fill: @dark-gray !important;
+  }
+}
+
+.ql-editor li:not(.ql-direction-rtl)::before {
+  margin-right: 0.8em;
+}
+
+.ql-editor ul[data-checked] > li::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border: 1px solid @dark-gray;
+  border-radius: 100%;
+  margin-left: -1em;
+  margin-bottom: -1px;
+}
+
+.ql-editor ul[data-checked=true] > li {
+  position: relative;
+  opacity: 0.3;
+}
+
+.ql-editor ul[data-checked=true] > li::after {
+  content: "";
+  position: absolute;
+  top: 6px;
+  left: 0.6em;
+
+  font-size: 16px;
+  width: 6px;
+  height: 6px;
+  background: @dark-gray;
+  border-radius: 100%;
+}
+
+.ql-editor li.ql-indent-1:not(.ql-direction-rtl) { padding-left: 8ch; }
+.ql-editor li.ql-indent-2:not(.ql-direction-rtl) { padding-left: 12ch; }
+.ql-editor li.ql-indent-3:not(.ql-direction-rtl) { padding-left: 16ch; }
+.ql-editor li.ql-indent-4:not(.ql-direction-rtl) { padding-left: 20ch; }
+.ql-editor li.ql-indent-5:not(.ql-direction-rtl) { padding-left: 24ch; }
+.ql-editor li.ql-indent-6:not(.ql-direction-rtl) { padding-left: 28ch; }
+.ql-editor li.ql-indent-7:not(.ql-direction-rtl) { padding-left: 32ch; }
+.ql-editor li.ql-indent-8:not(.ql-direction-rtl) { padding-left: 36ch; }
+
+.ql-editor ul[data-checked=true] > li.ql-indent-1::after { left: 5.5ch; }
+.ql-editor ul[data-checked=true] > li.ql-indent-2::after { left: 8.7ch; }
+.ql-editor ul[data-checked=true] > li.ql-indent-3::after { left: 11.9ch; }
+.ql-editor ul[data-checked=true] > li.ql-indent-4::after { left: 15.3ch; }
+.ql-editor ul[data-checked=true] > li.ql-indent-5::after { left: 18.5ch; }
+.ql-editor ul[data-checked=true] > li.ql-indent-6::after { left: 21.7ch; }
+.ql-editor ul[data-checked=true] > li.ql-indent-7::after { left: 24.9ch; }
+.ql-editor ul[data-checked=true] > li.ql-indent-8::after { left: 28.2ch; }

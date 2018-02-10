@@ -1,0 +1,37 @@
+@import (multiple) "./variables.less";
+
+.cover {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: @off-white;
+
+  z-index: 2;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  visibility: hidden;
+  opacity: 0;
+
+  .is-hidden & {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  h2 {
+    font-weight: 300;
+    color: @medium-gray;
+  }
+
+  .time {
+    font-size: 30px;
+    margin-bottom: 0;
+  }
+}

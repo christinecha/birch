@@ -1,0 +1,27 @@
+{
+  "name": "birch",
+  "version": "1.0.0",
+  "description": "",
+  "main": "background.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "webpack --watch --progress & less-watch-compiler"
+  },
+  "author": "Christine Cha <hello@christinecha.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^4.17.0",
+    "eslint-config-standard": "^11.0.0-beta.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^6.0.0",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "less": "^2.7.3",
+    "webpack": "^3.10.0"
+  },
+  "dependencies": {
+    "highlight.js": "^9.12.0",
+    "moment": "^2.20.1",
+    "quill": "^1.3.5"
+  }
+}
