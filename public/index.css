@@ -1045,7 +1045,7 @@ b {
 code {
   font-size: 100% !important;
   padding: 1px 3px !important;
-  margin: 0 -3px !important;
+  margin: 0 0 !important;
 }
 code,
 pre {
@@ -1179,52 +1179,46 @@ a {
   border-radius: 100%;
 }
 .ql-editor li.ql-indent-1:not(.ql-direction-rtl) {
-  padding-left: 8ch;
+  padding-left: 0;
+  margin-left: 8ch;
 }
 .ql-editor li.ql-indent-2:not(.ql-direction-rtl) {
-  padding-left: 12ch;
+  padding-left: 0;
+  margin-left: 12ch;
 }
 .ql-editor li.ql-indent-3:not(.ql-direction-rtl) {
-  padding-left: 16ch;
+  padding-left: 0;
+  margin-left: 16ch;
 }
 .ql-editor li.ql-indent-4:not(.ql-direction-rtl) {
-  padding-left: 20ch;
+  padding-left: 0;
+  margin-left: 20ch;
 }
 .ql-editor li.ql-indent-5:not(.ql-direction-rtl) {
-  padding-left: 24ch;
+  padding-left: 0;
+  margin-left: 24ch;
 }
 .ql-editor li.ql-indent-6:not(.ql-direction-rtl) {
-  padding-left: 28ch;
+  padding-left: 0;
+  margin-left: 28ch;
 }
 .ql-editor li.ql-indent-7:not(.ql-direction-rtl) {
-  padding-left: 32ch;
+  padding-left: 0;
+  margin-left: 32ch;
 }
 .ql-editor li.ql-indent-8:not(.ql-direction-rtl) {
-  padding-left: 36ch;
+  padding-left: 0;
+  margin-left: 36ch;
 }
-.ql-editor ul[data-checked=true] > li.ql-indent-1::after {
-  left: 5.5ch;
-}
-.ql-editor ul[data-checked=true] > li.ql-indent-2::after {
-  left: 8.7ch;
-}
-.ql-editor ul[data-checked=true] > li.ql-indent-3::after {
-  left: 11.9ch;
-}
-.ql-editor ul[data-checked=true] > li.ql-indent-4::after {
-  left: 15.3ch;
-}
-.ql-editor ul[data-checked=true] > li.ql-indent-5::after {
-  left: 18.5ch;
-}
-.ql-editor ul[data-checked=true] > li.ql-indent-6::after {
-  left: 21.7ch;
-}
-.ql-editor ul[data-checked=true] > li.ql-indent-7::after {
-  left: 24.9ch;
-}
+.ql-editor ul[data-checked=true] > li.ql-indent-1::after,
+.ql-editor ul[data-checked=true] > li.ql-indent-2::after,
+.ql-editor ul[data-checked=true] > li.ql-indent-3::after,
+.ql-editor ul[data-checked=true] > li.ql-indent-4::after,
+.ql-editor ul[data-checked=true] > li.ql-indent-5::after,
+.ql-editor ul[data-checked=true] > li.ql-indent-6::after,
+.ql-editor ul[data-checked=true] > li.ql-indent-7::after,
 .ql-editor ul[data-checked=true] > li.ql-indent-8::after {
-  left: 28.2ch;
+  left: -10px !important;
 }
 .cover {
   width: 100%;

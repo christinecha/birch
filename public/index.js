@@ -16279,8 +16279,11 @@ const $time = document.getElementsByClassName('time')[0]
 const $date = document.getElementsByClassName('date')[0]
 const $birch = document.getElementsByClassName('birch')[0]
 
+const IS_EXTENSION = !!chrome.runtime.id
+
 const getTab = () => {
   return new Promise(resolve => {
+    if (!IS_EXTENSION) return resolve()
     chrome.tabs.getCurrent(tab => resolve(tab))
   })
 }
@@ -16297,9 +16300,11 @@ class Birch {
 
     getTab()
     .then((tab) => {
-      this.tabInfo = {
-        tabId: tab.id,
-        windowId: tab.windowId
+      if (tab) {
+        this.tabInfo = {
+          tabId: tab.id,
+          windowId: tab.windowId
+        }
       }
 
       this.updateFromStorage()
@@ -16316,11 +16321,14 @@ class Birch {
   addEventListeners() {
     document.addEventListener('click', () => this.quill.focus())
     window.addEventListener('beforeunload', this.handleBeforeUnload)
-    chrome.tabs.onActivated.addListener((info) => {
-      const isActiveTab = info.tabId === this.tabInfo.tabId && info.windowId === this.tabInfo.windowId
-      if (isActiveTab) this.updateFromStorage()
-      this.isActiveTab = isActiveTab
-    })
+
+    if (IS_EXTENSION) {
+      chrome.tabs.onActivated.addListener((info) => {
+        const isActiveTab = info.tabId === this.tabInfo.tabId && info.windowId === this.tabInfo.windowId
+        if (isActiveTab) this.updateFromStorage()
+        this.isActiveTab = isActiveTab
+      })
+    }
 
     $birch.addEventListener('click', () => {
       this.birchHidden = !this.birchHidden
@@ -16330,6 +16338,8 @@ class Birch {
   }
 
   handleBeforeUnload() {
+    if (!IS_EXTENSION) return
+
     clearInterval(this.interval)
     this.interval = null
     chrome.runtime.sendMessage({
@@ -16339,7 +16349,7 @@ class Birch {
   }
 
   save() {
-    if (!this.quill || !this.isActiveTab) return
+    if (!this.quill || !this.isActiveTab || !IS_EXTENSION) return
 
     chrome.runtime.sendMessage({
       type: 'save',
@@ -16351,12 +16361,19 @@ class Birch {
 
   updateFromStorage() {
     return new Promise((resolve) => {
+      if (!IS_EXTENSION) {
+        this.updateView()
+        document.body.classList.add('is-loaded')
+        resolve()
+        return
+      }
+
       chrome.storage.sync.get(['birchHidden', 'birchContents'], e => {
         this.birchHidden = !!e.birchHidden
         this.birchContents = e.birchContents
 
         this.updateView()
-        setTimeout(() => document.body.classList.add('is-loaded'), 0)
+        document.body.classList.add('is-loaded')
 
         resolve()
       })
