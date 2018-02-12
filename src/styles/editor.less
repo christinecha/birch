@@ -13,7 +13,7 @@
   position: fixed;
   top: 0;
   right: 0;
-  width: 60%;
+  max-width: 60%;
   z-index: 1;
   border: none !important;
   text-align: right;
@@ -98,34 +98,43 @@
   margin-right: 0.8em;
 }
 
+.ql-editor ul[data-checked] > li {
+  position: relative;
+  padding-left: 6px !important;
+}
+
 .ql-editor ul[data-checked] > li::before {
   content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto 0;
   width: 10px;
   height: 10px;
   border: 1px solid @dark-gray;
   border-radius: 100%;
-  margin-left: -1em;
-  margin-bottom: -1px;
+  margin-left: -15px;
 }
 
 .ql-editor ul[data-checked=true] > li {
-  position: relative;
   opacity: 0.3;
 }
 
 .ql-editor ul[data-checked=true] > li::after {
   content: "";
   position: absolute;
-  top: 6px;
-  left: 0.6em;
-
-  font-size: 16px;
+  top: 0;
+  bottom: 0;
+  left: -12px;
   width: 6px;
   height: 6px;
+  margin: auto;
   background: @dark-gray;
   border-radius: 100%;
 }
 
+.ql-editor li:not(.ql-direction-rtl) { padding-left: 0 !important; margin-left: 2.5ch; }
 .ql-editor li.ql-indent-1:not(.ql-direction-rtl) { padding-left: 0; margin-left: 8ch; }
 .ql-editor li.ql-indent-2:not(.ql-direction-rtl) { padding-left: 0; margin-left: 12ch; }
 .ql-editor li.ql-indent-3:not(.ql-direction-rtl) { padding-left: 0; margin-left: 16ch; }
@@ -134,14 +143,3 @@
 .ql-editor li.ql-indent-6:not(.ql-direction-rtl) { padding-left: 0; margin-left: 28ch; }
 .ql-editor li.ql-indent-7:not(.ql-direction-rtl) { padding-left: 0; margin-left: 32ch; }
 .ql-editor li.ql-indent-8:not(.ql-direction-rtl) { padding-left: 0; margin-left: 36ch; }
-
-.ql-editor ul[data-checked=true] > li.ql-indent-1::after,
-.ql-editor ul[data-checked=true] > li.ql-indent-2::after,
-.ql-editor ul[data-checked=true] > li.ql-indent-3::after,
-.ql-editor ul[data-checked=true] > li.ql-indent-4::after,
-.ql-editor ul[data-checked=true] > li.ql-indent-5::after,
-.ql-editor ul[data-checked=true] > li.ql-indent-6::after,
-.ql-editor ul[data-checked=true] > li.ql-indent-7::after,
-.ql-editor ul[data-checked=true] > li.ql-indent-8::after {
-  left: -10px !important;
-}

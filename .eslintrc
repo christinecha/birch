@@ -3,7 +3,8 @@
   "rules": {
     "indent": [1, 2, { "MemberExpression": 0} ],
     "no-new": "off",
-    "space-before-function-paren": 0
+    "space-before-function-paren": 0,
+    "no-return-assign": "off"
   },
   "globals": {
     "chrome": true,

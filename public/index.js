@@ -16272,31 +16272,40 @@ return zhTw;
 
 const Quill = __webpack_require__(121)
 const moment = __webpack_require__(0)
-const {QUILL_CONFIG} = __webpack_require__(129)
+const {
+  QUILL_CONFIG,
+  BIRCH_OPTIONS,
+  BIRCH_DEFAULT_OPTIONS,
+  BIRCH_STYLE_TEMPLATE,
+  IS_EXTENSION
+} = __webpack_require__(129)
+const {
+  getTab,
+  getElement
+} = __webpack_require__(132)
 __webpack_require__(130)
-
-const $time = document.getElementsByClassName('time')[0]
-const $date = document.getElementsByClassName('date')[0]
-const $birch = document.getElementsByClassName('birch')[0]
-
-const IS_EXTENSION = !!chrome.runtime.id
-
-const getTab = () => {
-  return new Promise(resolve => {
-    if (!IS_EXTENSION) return resolve()
-    chrome.tabs.getCurrent(tab => resolve(tab))
-  })
-}
 
 class Birch {
   constructor () {
+    this.$editorWrapper = document.getElementsByClassName('editor-wrapper')[0]
+    this.$time = document.getElementsByClassName('time')[0]
+    this.$date = document.getElementsByClassName('date')[0]
+    this.$birch = document.getElementsByClassName('birch')[0]
+    this.$menu = document.getElementsByClassName('menu')[0]
+    this.$h1 = this.$menu.getElementsByTagName('H1')[0]
+    this.$options = document.getElementsByClassName('options')[0]
+
     this.setTime = this.setTime.bind(this)
     this.save = this.save.bind(this)
     this.handleBeforeUnload = this.handleBeforeUnload.bind(this)
+    this.toggleHiddenMode = this.toggleHiddenMode.bind(this)
+    this.toggleMenu = this.toggleMenu.bind(this)
 
     this.isActiveTab = true
     this.birchContents = null
     this.birchHidden = null
+    this.birchOptions = BIRCH_DEFAULT_OPTIONS
+    this.menuOpen = false
 
     getTab()
     .then((tab) => {
@@ -16311,6 +16320,8 @@ class Birch {
       .then(() => {
         this.interval = setInterval(this.save, 100)
         this.addEventListeners()
+        this.initCustomOptions()
+        this.updateView()
       })
     })
 
@@ -16319,7 +16330,7 @@ class Birch {
   }
 
   addEventListeners() {
-    document.addEventListener('click', () => this.quill.focus())
+    this.$editorWrapper.addEventListener('click', () => this.quill.focus())
     window.addEventListener('beforeunload', this.handleBeforeUnload)
 
     if (IS_EXTENSION) {
@@ -16330,11 +16341,50 @@ class Birch {
       })
     }
 
-    $birch.addEventListener('click', () => {
-      this.birchHidden = !this.birchHidden
-      this.save()
-      this.updateView()
-    })
+    this.$birch.addEventListener('click', this.toggleHiddenMode)
+    this.$h1.addEventListener('click', this.toggleMenu)
+  }
+
+  toggleMenu() {
+    this.$menu.classList.toggle('is-open')
+  }
+
+  toggleHiddenMode() {
+    this.birchHidden = !this.birchHidden
+    this.save()
+    this.updateView()
+  }
+
+  initCustomOptions() {
+    for (let option in BIRCH_OPTIONS) {
+      const $option = getElement('DIV', 'option')
+      const $label = getElement('LABEL', '', option)
+      $option.dataset.option = option
+
+      const $choicesWrapper = getElement('DIV', 'choices')
+      const choices = BIRCH_OPTIONS[option]
+      const selection = this.birchOptions[option] || BIRCH_DEFAULT_OPTIONS[option]
+
+      const $choices = choices.map(choice => {
+        const $choice = getElement('SPAN', 'choice', choice)
+        $choice.dataset.value = choice
+        $choice.dataset.selected = selection === choice
+        $choicesWrapper.appendChild($choice)
+        return $choice
+      })
+
+      $option.addEventListener('click', (e) => {
+        if (!e.target.dataset.value) return
+        this.birchOptions[option] = e.target.dataset.value
+        $choices.forEach($c => $c.dataset.selected = 'false')
+        e.target.dataset.selected = 'true'
+        this.updateView()
+      })
+
+      $option.appendChild($label)
+      $option.appendChild($choicesWrapper)
+      this.$options.appendChild($option)
+    }
   }
 
   handleBeforeUnload() {
@@ -16355,6 +16405,7 @@ class Birch {
       type: 'save',
       birchContents: this.quill.getContents(),
       birchHidden: this.birchHidden,
+      birchOptions: this.birchOptions,
       tabInfo: this.tabInfo
     })
   }
@@ -16368,9 +16419,10 @@ class Birch {
         return
       }
 
-      chrome.storage.sync.get(['birchHidden', 'birchContents'], e => {
+      chrome.storage.sync.get(['birchHidden', 'birchContents', 'birchOptions'], e => {
         this.birchHidden = !!e.birchHidden
         this.birchContents = e.birchContents
+        this.birchOptions = e.birchOptions || BIRCH_DEFAULT_OPTIONS
 
         this.updateView()
         document.body.classList.add('is-loaded')
@@ -16391,12 +16443,28 @@ class Birch {
     if (this.birchContents) {
       this.quill.setContents(this.birchContents)
     }
+
+    const $style = document.createElement('STYLE')
+    $style.textContent = BIRCH_STYLE_TEMPLATE
+    document.body.appendChild($style)
+
+    for (let i in BIRCH_DEFAULT_OPTIONS) {
+      let value = this.birchOptions[i] || BIRCH_DEFAULT_OPTIONS[i]
+      $style.textContent = $style.textContent.replace(`@${i}`, value)
+    }
+
+    if (this.$style) document.body.removeChild(this.$style)
+    this.$style = $style
+
+    this.setTime()
   }
 
   setTime() {
     const now = moment()
-    $time.textContent = now.format('hh:mm A')
-    $date.textContent = now.format('dddd, MMMM Do, YYYY')
+    const is24HourTime = this.birchOptions['time format'] === '24hr'
+    const timeFormat = is24HourTime ? 'HH:mm' : 'hh:mm A'
+    this.$time.textContent = now.format(timeFormat)
+    this.$date.textContent = now.format('dddd, MMMM Do, YYYY')
   }
 }
 
@@ -30173,8 +30241,39 @@ const QUILL_CONFIG = {
   placeholder: 'Welcome to Birch. Click anywhere to start typing.'
 }
 
+const BIRCH_OPTIONS = {
+  'font-size': ['11px', '12px', '13px', '14px'],
+  'font-family': ['monospace', 'sans-serif', 'serif'],
+  'line-height': ['1.4', '1.6', '1.8', '2'],
+  'letter-spacing': ['0ch', '0.1ch', '0.2ch'],
+  'time format': ['24hr', '12hr']
+}
+
+const BIRCH_DEFAULT_OPTIONS = {
+  'font-size': '12px',
+  'font-family': 'monospace',
+  'line-height': '1.6',
+  'letter-spacing': '0.1ch',
+  'time format': '12hr'
+}
+
+const BIRCH_STYLE_TEMPLATE = `
+  p, li {
+    font-size: @font-size !important;
+    font-family: @font-family !important;
+    line-height: @line-height !important;
+    letter-spacing: @letter-spacing !important;
+  }
+`
+
+const IS_EXTENSION = !!chrome.runtime.id
+
 module.exports = {
-  QUILL_CONFIG
+  QUILL_CONFIG,
+  BIRCH_OPTIONS,
+  BIRCH_DEFAULT_OPTIONS,
+  BIRCH_STYLE_TEMPLATE,
+  IS_EXTENSION
 }
 
 
@@ -30191,6 +30290,33 @@ _gaq.push(['_trackPageview']);
   ga.src = 'https://ssl.google-analytics.com/ga.js';
   var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 })();
+
+
+/***/ }),
+/* 131 */,
+/* 132 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const { IS_EXTENSION } = __webpack_require__(129)
+
+const getTab = () => {
+  return new Promise(resolve => {
+    if (!IS_EXTENSION) return resolve()
+    chrome.tabs.getCurrent(tab => resolve(tab))
+  })
+}
+
+const getElement = (tag, className, content) => {
+  const $el = document.createElement(tag)
+  $el.className = className
+  $el.textContent = content
+  return $el
+}
+
+module.exports = {
+  getTab,
+  getElement
+}
 
 
 /***/ })

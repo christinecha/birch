@@ -14,6 +14,7 @@ const requestSync = (e) => {
 
   dataToStore.birchContents = e.birchContents
   dataToStore.birchHidden = e.birchHidden
+  dataToStore.birchOptions = e.birchOptions
   console.log('sync', dataToStore)
 }
 
